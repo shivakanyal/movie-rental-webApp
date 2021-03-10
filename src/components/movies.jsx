@@ -1,9 +1,14 @@
 import React, { Component } from "react";
 import { getMovies } from "../services/fakeMovieService";
 import Like from "./common/like";
+import Pagination from "./common/pagination";
+import { paginate } from "../utils/paginate";
+
 class Movies extends Component {
   state = {
     movies: getMovies(),
+    pageSize: 4,
+    currentPage: 1,
   };
   handleDelete(id) {
     let movies = this.state.movies.filter((movie) => movie._id !== id);
@@ -12,18 +17,27 @@ class Movies extends Component {
   handleLike(movie) {
     const movies = [...this.state.movies];
     const index = movies.indexOf(movie);
-    // movies[index] = { ...movies[index] };
     movies[index].liked = !movies[index].liked;
     this.setState({ movies });
   }
+  handlePageChange = (page) => {
+    console.log("page ", page);
+    console.log("pageSize ", this.state.pageSize);
+    console.log("currentPage ", this.state.currentPage);
+    this.setState({ currentPage: page });
+  };
   render() {
-    if (this.state.movies.length === 0) {
+    const { currentPage, pageSize, movies: allMovies } = this.state;
+
+    const movies = paginate(allMovies, currentPage, pageSize);
+
+    if (movies.length === 0) {
       return <p>No movies in database</p>;
     }
     return (
       <div>
-        <p>Showing {this.state.movies.length} movies in database</p>
-        <table class="table">
+        <p>Showing {movies.length} movies in database</p>
+        <table className="table">
           <thead>
             <tr>
               <th scope="col">Title</th>
@@ -34,7 +48,7 @@ class Movies extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.movies.map((movie) => (
+            {movies.map((movie, _id) => (
               <tr>
                 <td>{movie.title}</td>
                 <td>{movie.genre.name}</td>
@@ -42,6 +56,7 @@ class Movies extends Component {
                 <td>{movie.dailyRentalRate}</td>
                 <td>
                   <Like
+                    key={_id}
                     liked={movie.liked}
                     onClick={() => this.handleLike(movie)}
                   />
@@ -60,6 +75,12 @@ class Movies extends Component {
             ))}
           </tbody>
         </table>
+        <Pagination
+          itemsCount={this.state.movies.length}
+          pageSize={this.state.pageSize}
+          onPageChange={this.handlePageChange}
+          currentPage={this.state.currentPage}
+        />
       </div>
     );
   }
