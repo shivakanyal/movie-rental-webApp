@@ -6,10 +6,11 @@
     "bootstrap": "^4.6.0",
     "cra-template": "1.1.2",
     "font-awesome": "^4.7.0",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.21",
     "prop-types": "^15.6.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-router-dom": "^4.3.1",
     "react-scripts": "4.0.3"
   },
   "scripts": {

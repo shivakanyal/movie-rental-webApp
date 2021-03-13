@@ -17,6 +17,7 @@ class TableBody extends Component {
           <tr key={item._id}>
             {columns.map((column) => (
               <td key={this.createKey(item, column)}>
+                {console.log(item, column)}
                 {this.renderCell(item, column)}
               </td>
             ))}
