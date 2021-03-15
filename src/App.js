@@ -9,6 +9,7 @@ import NotFound from "./components/notFound";
 import { Route, Switch, Redirect } from "react-router-dom";
 import React from "react";
 import MovieForm from "./components/movieForm";
+import LoginForm from "./components/loginForm";
 function App() {
   return (
     <React.Fragment>
@@ -19,6 +20,7 @@ function App() {
           <Route path="/movies" component={Movies} />
           <Route path="/customers" component={Customers} />
           <Route path="/rentals" component={Rentals} />
+          <Route path="/login" component={LoginForm} />
           <Redirect to="/movies" from="/" exact />
           <Route path="/not-found" component={NotFound} />
           <Redirect to="/not-found" />
