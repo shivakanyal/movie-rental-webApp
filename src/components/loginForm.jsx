@@ -17,32 +17,13 @@ class LoginForm extends Form {
     console.log("submitted");
   };
   render() {
-    const { account, errors } = this.state;
     return (
       <div>
         <h1>Login</h1>
         <form onSubmit={this.handleSubmit}>
-          <Input
-            onChange={this.handleChange}
-            value={account.username}
-            label="Username"
-            name="username"
-            error={errors.username}
-          />
-          <Input
-            onChange={this.handleChange}
-            value={account.password}
-            label="Password"
-            name="password"
-            error={errors.password}
-          />
-          <button
-            type="submit"
-            class="btn btn-primary"
-            disabled={this.validate()}
-          >
-            Submit
-          </button>
+          {this.renderInput("username", "Username")}
+          {this.renderInput("password", "Password", "password")}
+          {this.renderButton("Login")}
         </form>
       </div>
     );
